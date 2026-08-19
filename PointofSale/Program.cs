@@ -450,10 +450,10 @@ namespace PointofSale
         static ProductManager products = new ProductManager();
         static Sale currentSale = null;
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             // Load product catalog from file if exists (silent)
-            products.LoadCatalog();
+            await Task.Run(() => products.LoadCatalog());
 
             // Welcome message with StringBuilder
             StringBuilder text = new StringBuilder();
