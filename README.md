@@ -1,5 +1,7 @@
 **QuickStop Mart – Point of Sale System**
 
+!\[.NET Framework](https://img.shields.io/badge/.NET\_Framework-4.7.2-512BD4)
+
 
 
 **📌 Overview**
