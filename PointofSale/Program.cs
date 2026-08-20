@@ -8,7 +8,7 @@ using System.IO;             // for File operations
 
 namespace PointofSale
 {
-    // ===== BASE CLASS FOR INHERITANCE DEMO =====
+    // ===== BASE CLASS FOR INHERITANCE =====
     class Entity
     {
         public int Id { get; set; }
@@ -23,7 +23,7 @@ namespace PointofSale
         public int Quantity { get; set; }
     }
 
-    // ===== USER CLASS (unchanged) =====
+    // ===== USER CLASS =====
     class User
     {
         private string userName;
@@ -59,7 +59,6 @@ namespace PointofSale
         {
             string json = JsonConvert.SerializeObject(productCatalog, Formatting.Indented);
             File.WriteAllText("products.json", json);
-            // Silent save – no console output (you can uncomment if you want a message)
             // Console.WriteLine("Catalog saved to products.json");
         }
 
@@ -73,13 +72,12 @@ namespace PointofSale
                 if (loaded != null)
                 {
                     productCatalog = loaded;
-                    // Silent load – no console output (optional)
                     // Console.WriteLine($"Loaded {productCatalog.Count} products from file.");
                 }
             }
         }
 
-        // ----- Add Products (auto-save) -----
+        // ----- Add Products -----
         public void AddProducts()
         {
             Console.WriteLine("Welcome to Product Inventory");
@@ -89,7 +87,7 @@ namespace PointofSale
                 string idInput = Console.ReadLine();
                 if (idInput.ToLower() == "x")
                 {
-                    Environment.Exit(0);   // Immediately stops the program
+                    Environment.Exit(0);
                 }
                 if (idInput.ToLower() == "m")
                 {
@@ -158,7 +156,7 @@ namespace PointofSale
                 if (selection == "1")
                 {
                     Console.Clear();
-                    return;   // go back to main menu (no recursive call)
+                    return;
                 }
                 else
                 {
@@ -167,7 +165,7 @@ namespace PointofSale
             }
         }
 
-        // ----- View Products (NO JSON display – just the list) -----
+        // ----- View Products -----
         public void ViewProducts()
         {
             Console.WriteLine("Right Now! We have the following products:");
@@ -181,7 +179,6 @@ namespace PointofSale
                 {
                     Console.WriteLine($"SKU: {item.Key} | " + $"Name: {item.Value.Name} | " + $"Price: {item.Value.Price} | " + $"Category: {item.Value.Category} | " + $"Quantity: {item.Value.Quantity}");
                 }
-                // ----- JSON display REMOVED – only file operations remain -----
             }
 
             while (true)
@@ -195,7 +192,7 @@ namespace PointofSale
                 if (select == "1")
                 {
                     Console.Clear();
-                    return;   // go back to main menu (no recursive call)
+                    return;
                 }
             }
         }
@@ -209,7 +206,7 @@ namespace PointofSale
                 {
                     currentStock = product.Quantity - quantity;
                     product.Quantity = currentStock;
-                    SaveCatalog(); // save after stock change
+                    SaveCatalog();
                     return true;
                 }
             }
@@ -225,7 +222,7 @@ namespace PointofSale
         private Stack<Action> undoStack;
         private Queue<string> receiptQueue;
 
-        // Arrays for tax brackets (demonstrates arrays)
+        // Arrays for tax
         private double[] taxThresholds = { 0, 100, 200, 500 };
         private double[] taxRates = { 0.05, 0.08, 0.10, 0.12 };
 
@@ -237,7 +234,7 @@ namespace PointofSale
             receiptQueue = new Queue<string>();
         }
 
-        // ----- Start a new sale (clear everything) -----
+        // ----- Start a new sale -----
         public void StartNewSale()
         {
             Console.Clear();
@@ -247,7 +244,7 @@ namespace PointofSale
             Console.WriteLine("New sale started. Cart is empty.");
         }
 
-        // ----- Add item to cart (with undo support) -----
+        // ----- Add item to cart -----
         public void AddItemToCart(int sku, int quantity)
         {
             if (products.productCatalog.TryGetValue(sku, out Product product))
@@ -452,7 +449,7 @@ namespace PointofSale
 
         static async Task Main(string[] args)
         {
-            // Load product catalog from file if exists (silent)
+            // Load product catalog from file if exists
             await Task.Run(() => products.LoadCatalog());
 
             // Welcome message with StringBuilder
